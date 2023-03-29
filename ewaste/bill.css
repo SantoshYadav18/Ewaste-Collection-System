@@ -1,0 +1,37 @@
+/* *{
+	border:1px solid black;
+} */
+
+table,th,td{
+	border:1px solid rgb(207, 207, 207);
+	border-collapse:collapse;
+}
+.table{
+	margin:0px auto;
+}
+.t1{
+	margin-top:40px;
+	padding:5px 5px;
+}
+.t2{
+	width:700px;
+	padding:5px 10px;
+}
+.text-center{
+	text-align:center;
+}
+
+#bill-heading{
+	font-weight:bold;
+	text-align:center;
+	margin-top:80px;
+	font-size:21px;
+	color:rgb(151,244,60);
+}
+#item-heading{
+	font-weight:bold;
+	text-align:center;
+	margin-top:20px;
+	font-size:21px;
+	color:rgb(151,244,60);
+}

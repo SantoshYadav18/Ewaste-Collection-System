@@ -1,0 +1,187 @@
+create table admin (ad_id SERIAL primary key,adname varchar(30),adpwd varchar(30));
+create table appointment(ap_id SERIAL primary key,apdate date,v_id SERIAL REFERENCES vendor(v_id),ad_id SERIAL REFERENCES admin(ad_id));
+create table employee (e_id SERIAL primary key,ename varchar(30),etype varchar(20),ephone bigint,eaddr varchar(100),eemail varchar(30),ad_id SERIAL REFERENCES admin(ad_id));
+create table vendor(v_id SERIAL primary key,vname varchar(30),vtype varchar(20),vphone bigint,vemail varchar(30),vaddr varchar(100),e_id SERIAL REFERENCES employee(e_id));
+create table ewaste(ew_id SERIAL primary key,ewdes text,v_id SERIAL REFERENCES vendor(v_id),ad_id SERIAL REFERENCES admin(ad_id));
+create table customer(c_id serial primary key,cname varchar(30),cphone bigint,caddr varchar(50),cemail varchar(30),cdes varchar(200),cdate date,ad_id serial references admin(ad_id),e_id serial references employee(e_id));
+/*Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+'chcp' is not recognized as an internal or external command,
+operable program or batch file.
+Password for user postgres:
+psql (13.3)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \c ecs;
+You are now connected to database "ecs" as user "postgres".
+ecs=# \pset pager off
+Pager usage is off.
+
+ecs=# create table admin (ad_id SERIAL primary key,adname varchar(30),adpwd varchar(30));*/ 
+/*CREATE TABLE
+
+ecs=# insert into admin(adname,adpwd) values('admin','root');
+INSERT 0 1
+ecs=# select * from admin;
+ ad_id | adname | adpwd
+-------+--------+-------
+     1 | admin  | root
+
+ecs=#create table employee (e_id SERIAL primary key,ename varchar(30),etype varchar(20),ephone bigint,eaddr varchar(100),eemail varchar(30),ad_id SERIAL REFERENCES admin(ad_id));*/ 
+/*CREATE TABLE
+ecs=# select * from employee;
+ e_id | ename | etype | ephone | eaddr | eemail | ad_id
+------+-------+-------+--------+-------+--------+-------
+(0 rows)
+
+ecs=#create table vendor(v_id SERIAL primary key,vname varchar(30),vtype varchar(20),vphone bigint,vemail varchar(30),vaddr varchar(100),e_id SERIAL REFERENCES employee(e_id));*/ 
+/*CREATE TABLE
+ecs=# select * from vendor;
+ v_id | vname | vtype | vphone | vemail | vaddr | e_id
+------+-------+-------+--------+--------+-------+------
+(0 rows)
+
+ecs=#create table appointment(ap_id SERIAL primary key,apdate date,v_id SERIAL REFERENCES vendor(v_id),ad_id SERIAL REFERENCES admin(ad_id));*/ 
+/*CREATE TABLE
+ecs=# select * from appointment;
+ ap_id | apdate | v_id | ad_id
+-------+--------+------+-------
+(0 rows)
+
+ecs=#create table ewaste(ew_id SERIAL primary key,ewdes text,v_id SERIAL REFERENCES vendor(v_id),ad_id SERIAL REFERENCES admin(ad_id));*/ 
+/*CREATE TABLE
+ecs=# select * from ewaste;
+ ew_id | ewdes | v_id | ad_id
+-------+-------+------+-------
+(0 rows)
+
+
+ecs=# select * from vendor;
+ v_id |  vname   |   vtype    |   vphone   |           vemail            |               vaddr                | e_id
+------+----------+------------+------------+-----------------------------+------------------------------------+------
+   15 | Abhishek | Individual | 7385001679 | abhishekbhawalkar@gmail.com | Sai Residency, Dhayari, Pune-41    |    1
+   16 | Santosh  | Individual | 7385001679 | santy@gmail.com             | Narayani Hills, Warje, Pune.       |    1
+   17 | Atharva  | Individual | 9739933800 | atha@gmail.com              | Sunder Garden, Sinhgad Road, Pune. |    1
+(3 rows)
+
+ecs=# select * from ewaste;
+ ew_id |                     ewdes                      | v_id | ad_id
+-------+------------------------------------------------+------+-------
+     6 | LED/ LCD Monitors Cables/ Adapters Ceiling Fan |   15 |     1
+     7 | Boilers/ Geyser Music Systems                  |   16 |     1
+     8 | Desktops                                       |   17 |     1
+(3 rows)
+
+ecs=# select * from appointment;
+ ap_id |   apdate   | v_id | ad_id
+-------+------------+------+-------
+     6 | 2021-06-22 |   15 |     1
+     7 | 2021-06-15 |   16 |     1
+     8 | 2021-06-23 |   17 |     1
+(3 rows)
+
+
+ecs=# insert into employee(ename,etype,ephone,eaddr,eemail,ad_id) values ('Sunil','Logistics',8352945276,'Jai Ganesh Villa, Koregaon Park, Pune.','sun01@giamil.com',1);
+INSERT 0 1
+ecs=# insert into employee(ename,etype,ephone,eaddr,eemail,ad_id) values ('Revan','Logistics',8738254706,'Ujwal Bliss,Dhayari, Pune.','revan@gmail.com',1);
+INSERT 0 1
+ecs=# insert into employee(ename,etype,ephone,eaddr,eemail,ad_id) values ('Suraj','Quality Inspector',9988775342,'Sky Ropes, Kothrud, Pune.','suraj@gmail.com',1);
+INSERT 0 1
+ecs=# insert into employee(ename,etype,ephone,eaddr,eemail,ad_id) values ('Dhiraj','Quality Inspector',7341883399,'Avnee Park, Balaji Nagar, Pune.','dhiraj56@gmail.com',1);
+INSERT 0 1
+ecs=# select * from employee;
+ e_id |  ename  |       etype       |   ephone   |                 eaddr                  |       eemail       | ad_id
+------+---------+-------------------+------------+----------------------------------------+--------------------+-------
+    1 | Prakash | Logistics         | 9845346242 | High Bliss, Vadgaon, Pune.             | prakash2@gmail.com |     1
+    2 | Sunil   | Logistics         | 8352945276 | Jai Ganesh Villa, Koregaon Park, Pune. | sun01@giamil.com   |     1
+    3 | Revan   | Logistics         | 8738254706 | Ujwal Bliss,Dhayari, Pune.             | revan@gmail.com    |     1
+    4 | Suraj   | Quality Inspector | 9988775342 | Sky Ropes, Kothrud, Pune.              | suraj@gmail.com    |     1
+    5 | Dhiraj  | Quality Inspector | 7341883399 | Avnee Park, Balaji Nagar, Pune.        | dhiraj56@gmail.com |     1
+(5 rows)
+
+
+ecs=# \d data;
+                                    Table "public.data"
+  Column  |         Type          | Collation | Nullable |             Default
+----------+-----------------------+-----------+----------+----------------------------------
+ id       | integer               |           | not null | nextval('data_id_seq'::regclass)
+ dname    | character varying(40) |           |          |
+ quantity | integer               |           |          |
+Indexes:
+    "data_pkey" PRIMARY KEY, btree (id)
+
+ecs=# create table products(pid serial primary key,pname varchar(40),price integer);
+CREATE TABLE
+ecs=# insert into products(pname,price) values('Laptops',500);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Desktops',300);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('LED/ LCD Monitors',350);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Printers',250);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Servers  & Workstations',300);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Projectors',150);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Routers/ Switches',100);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('PCB',50);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Cables/ Adapters',20);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Household Electrical Waste',50);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('AC',300);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Refrigerator',400);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Cooler',250);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('LED/ LCD/ CRT Televisions',450);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Boilers/ Geyser',350);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Ceiling Fan',80);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Music Systems',100);
+INSERT 0 1
+ecs=# insert into products(pname,price) values('Toaster/ Mixer',120);
+INSERT 0 1
+ecs=#
+
+
+
+ecs=#create table customer(c_id serial primary key,cname varchar(30),cphone bigint,caddr varchar(50),cemail varchar(30),cdes varchar(200),cdate date,ad_id serial references admin(ad_id),e_id serial references employee(e_id));*/ 
+/*CREATE TABLE
+ecs=# \d customer;
+                                     Table "public.customer"
+ Column |          Type          | Collation | Nullable |                 Default
+--------+------------------------+-----------+----------+-----------------------------------------
+ c_id   | integer                |           | not null | nextval('customer_c_id_seq'::regclass)
+ cname  | character varying(30)  |           |          |
+ cphone | bigint                 |           |          |
+ caddr  | character varying(50)  |           |          |
+ cemail | character varying(30)  |           |          |
+ cdes   | character varying(200) |           |          |
+ cdate  | date                   |           |          |
+ ad_id  | integer                |           | not null | nextval('customer_ad_id_seq'::regclass)
+ e_id   | integer                |           | not null | nextval('customer_e_id_seq'::regclass)
+Indexes:
+    "customer_pkey" PRIMARY KEY, btree (c_id)
+Foreign-key constraints:
+    "customer_ad_id_fkey" FOREIGN KEY (ad_id) REFERENCES admin(ad_id)
+    "customer_e_id_fkey" FOREIGN KEY (e_id) REFERENCES employee(e_id)
+                                                          
+
+ecs=# insert into customer(cname,cphone,caddr,cemail,cdes,cdate,ad_id,e_id) values('Unitron',9876345671,'Lokikand, Satara','unitron@gmail.com','Cooler 3, AC 2, Ceiling Fan 4,Printers 5','2020-7-12',1,3);
+INSERT 0 1
+ecs=# insert into customer(cname,cphone,caddr,cemail,cdes,cdate,ad_id,e_id) values('Eureka',8882892200,'Lonavla, Pune','eureka@gmail.com','Laptops 8, PCB 12, Ceiling Fan 2,Cables 5','2020-8-1',1,2);
+INSERT 0 1
+ecs=# insert into customer(cname,cphone,caddr,cemail,cdes,cdate,ad_id,e_id) values('Kingston',7598497382,'Vele, Pune','king@gmail.com','Desktop 4, Music System 2, LCD 15, Toaster 5','2020-1-9',1,4);
+INSERT 0 1*/
